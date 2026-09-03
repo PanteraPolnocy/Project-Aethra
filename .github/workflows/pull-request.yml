@@ -1,0 +1,76 @@
+name: Pull Request check
+
+# Types, unit tests, and proof that the frontend's generated event types still
+# match the Rust structs they came from.
+
+on:
+  pull_request:
+
+# A new push to the same pull request makes the previous run pointless.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  frontend:
+    name: Types and frontend tests
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      # esbuild strips types without checking them, so this is the only thing
+      # standing between a type error and a release.
+      - name: Check types
+        run: npm run typecheck
+
+      - name: Frontend tests
+        run: npm test
+
+  core:
+    name: Core tests
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install Linux build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libwebkit2gtk-4.1-dev \
+            libappindicator3-dev \
+            librsvg2-dev \
+            patchelf
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache Rust build
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: "./src-tauri -> target"
+
+      - run: npm ci
+
+      # tauri-build resolves frontendDist at compile time, so dist/ has to exist
+      # before cargo will even check the crate.
+      - name: Build frontend assets
+        run: npm run assetscompress
+
+      - name: Core tests
+        run: npm run test:rust
