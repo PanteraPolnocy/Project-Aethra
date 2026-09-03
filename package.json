@@ -7,15 +7,16 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "tauri": "tauri"
-  },
-  "dependencies": {
-    "@tauri-apps/api": "^2",
-    "@tauri-apps/plugin-opener": "^2"
+    "tauri": "tauri",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^2",
-    "vite": "^8.2.2",
-    "typescript": "~7.0.2"
+    "esbuild": "^0.28.2",
+    "html-minifier-terser": "^7.2.0",
+    "typescript": "^7.0.2"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true
   }
 }
