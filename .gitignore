@@ -12,6 +12,11 @@ dist
 dist-ssr
 *.local
 
+# Cargo workspace build output (root of the workspace, not src-tauri)
+/target/
+/build-vc170-64/
+/build-vc180-64/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

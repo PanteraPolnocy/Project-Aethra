@@ -23,8 +23,9 @@ export default defineConfig(async () => ({
         }
       : undefined,
     watch: {
-      // 3. tell Vite to ignore watching `src-tauri`
-      ignored: ["**/src-tauri/**"],
+      // 3. keep Vite out of everything Cargo owns: the shell crate, the mind
+      //    crates, and the workspace-level target dir (locked DLLs on Windows)
+      ignored: ["**/src-tauri/**", "**/crates/**", "**/target/**"],
     },
   },
 }));

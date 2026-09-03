@@ -1,0 +1,39 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/aethra-models",
+    "crates/aethra-core",
+    "src-tauri",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+authors = ["Project Aethra contributors"]
+repository = "https://github.com/PanteraPolnocy/Project-Aethra"
+
+[workspace.dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "sync", "time", "process", "fs", "io-util"] }
+thiserror = "2"
+anyhow = "1"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "fmt"] }
+chrono = { version = "0.4", features = ["serde", "clock"] }
+uuid = { version = "1", features = ["v4"] }
+async-trait = "0.1"
+reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls"] }
+url = "2"
+parking_lot = "0.12"
+sha2 = "0.10"
+toml = "0.8"
+dirs = "6"
+rusqlite = { version = "0.40", features = ["bundled"] }
+sqlite-vec = "=0.1.9"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+opt-level = 3
+strip = true

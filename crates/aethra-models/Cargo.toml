@@ -1,0 +1,16 @@
+[package]
+name = "aethra-models"
+description = "Replaceable language-model layer for Aethra: trait, OpenAI-compatible client, local inference sidecar"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+serde = { workspace = true }
+serde_json = { workspace = true }
+tokio = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
+async-trait = { workspace = true }
+reqwest = { workspace = true }
