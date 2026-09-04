@@ -564,10 +564,10 @@ impl Mind {
                 budgets::has_headroom(c, &self.cfg.budgets, Resource::LearningMinutes, 1)?,
             ))
         })?;
-        if energy < 0.1 || !tokens_ok || !minutes_ok {
-            let reason = if energy < 0.1 {
+        if /* energy < 0.1 || */ !tokens_ok || !minutes_ok {
+            let reason = /* if energy < 0.1 {
                 "energy depleted for today"
-            } else if !tokens_ok {
+            } else */ if !tokens_ok {
                 "learning token budget spent"
             } else {
                 "learning time budget spent"

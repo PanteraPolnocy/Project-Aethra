@@ -47,11 +47,11 @@ impl InternalState {
     pub fn apply(&mut self, ev: StateEvent) {
         match ev {
             StateEvent::ChatTurn => {
-                self.energy -= 0.01;
+                // self.energy -= 0.01;
                 self.focus += 0.03;
             }
             StateEvent::LearningJobFinished { success } => {
-                self.energy -= 0.05;
+                // self.energy -= 0.05;
                 if success {
                     self.confidence += 0.02;
                 } else {
